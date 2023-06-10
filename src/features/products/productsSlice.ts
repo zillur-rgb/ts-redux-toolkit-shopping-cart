@@ -9,7 +9,7 @@ const initialState: IProductsState = {
   products: {},
 };
 
-const producsSlice = createSlice({
+const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
@@ -23,6 +23,6 @@ const producsSlice = createSlice({
   },
 });
 
-export const { receivedProducts } = producsSlice.actions;
+export const { receivedProducts } = productsSlice.actions;
 
-export default producsSlice.reducer;
+export default productsSlice.reducer;
