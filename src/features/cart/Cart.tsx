@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./Cart.module.css";
+import { useAppSelector } from "../../hooks";
+import { getTotalPrice } from "./cartSlice";
 
 export function Cart() {
+  const products = useAppSelector((state) => state.products.products);
+  const cart = useAppSelector((state) => state.cart.items);
+  const totalPrice = useAppSelector(getTotalPrice);
+
   return (
     <main className="page">
       <h1>Shopping Cart</h1>
@@ -15,36 +21,33 @@ export function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Magnifying Glass</td>
-            <td>
-              <input type="text" className={styles.input} defaultValue={21} />
-            </td>
-            <td>$44.44</td>
-            <td>
-              <button aria-label="Remove Magnifying Glass from Shopping Cart">
-                X
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Football Cleats</td>
-            <td>
-              <input type="text" className={styles.input} defaultValue={17} />
-            </td>
-            <td>$25.99</td>
-            <td>
-              <button aria-label="Remove Football Cleats from Shopping Cart">
-                X
-              </button>
-            </td>
-          </tr>
+          {Object.entries(cart).map(([id, quantity]) => (
+            <tr key={id}>
+              <td>{products[id].name}</td>
+              <td>
+                <input
+                  type="text"
+                  className={styles.input}
+                  defaultValue={quantity as number}
+                />
+              </td>
+              <td>{products[id].price}</td>
+
+              <td>
+                <button
+                  aria-label={`Remove ${products[id].name} from shopping cart`}
+                >
+                  x
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
         <tfoot>
           <tr>
             <td>Total</td>
             <td></td>
-            <td className={styles.total}>${0.0}</td>
+            <td className={styles.total}>${totalPrice}</td>
             <td></td>
           </tr>
         </tfoot>
