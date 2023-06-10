@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "./Cart.module.css";
-import { useAppSelector } from "../../hooks";
-import { getTotalPrice } from "./cartSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { getTotalPrice, removeFromCart } from "./cartSlice";
+import { useDispatch } from "react-redux";
 
 export function Cart() {
+  const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
   const cart = useAppSelector((state) => state.cart.items);
   const totalPrice = useAppSelector(getTotalPrice);
@@ -36,6 +38,7 @@ export function Cart() {
               <td>
                 <button
                   aria-label={`Remove ${products[id].name} from shopping cart`}
+                  onClick={() => dispatch(removeFromCart(id))}
                 >
                   x
                 </button>
