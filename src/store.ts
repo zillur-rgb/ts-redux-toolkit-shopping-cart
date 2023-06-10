@@ -8,3 +8,9 @@ export const store = configureStore({
     products: productsReducer,
   },
 });
+
+// infer the Rootstate and AppDospach types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+
+// infer type: {posts: PostsState, comments: ComentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch;
